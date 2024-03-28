@@ -1,6 +1,5 @@
-import cloudinary
 from django.contrib import admin
-from courses.models import Category, Courses
+from courses.models import Category, Courses, Lesson, Tag
 from django.utils.html import mark_safe
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from django import forms
@@ -37,3 +36,5 @@ class CourseAdmin(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(Category)
 admin.site.register(Courses, CourseAdmin)
+admin.site.register(Lesson)
+admin.site.register(Tag)
