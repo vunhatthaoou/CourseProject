@@ -35,7 +35,11 @@ class CourseViewset(viewsets.ViewSet, generics.ListAPIView):
 class LessonViewSet(viewsets.ViewSet, generics.RetrieveAPIView):
     queryset = Lesson.objects.prefetch_related('tags').filter(active = True)
     serializer_class = serializers.LessonDetailSerializer
-
+    @action(methods=['get'], url_path='comments', detail=True)
+    def get_comments(self, request, pk):
+        comments = self.get_object().comment_set.select_related('user').all()
+        return Response(serializers.CommentSerializer(comments,many= True).data,
+                        status=status.HTTP_200_OK)
 
 class UserViewSet(viewsets.ViewSet, generics.CreateAPIView):
     queryset = User.objects.filter(is_active = True)

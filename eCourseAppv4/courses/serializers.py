@@ -1,6 +1,6 @@
 from django.core import serializers
 from rest_framework import serializers
-from courses.models import Category, Courses, Lesson, Tag, User
+from courses.models import Category, Courses, Lesson, Tag, User, Comment
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -8,7 +8,7 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 class ItemSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
-        req= super().to_representation(instance)
+        req = super().to_representation(instance)
         req['image'] = instance.image.url
         return req
 
@@ -41,6 +41,12 @@ class UserSerializer(serializers.ModelSerializer):
         u.set_password(u.password)
         u.save()
         return u
+
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        if instance.avatar:
+            rep['avatar'] = instance.avatar.url
+        return rep
     class Meta:
         model = User
         fields = ['id', 'first_name', 'last_name', 'email', 'username', 'password', 'avatar']
@@ -49,3 +55,9 @@ class UserSerializer(serializers.ModelSerializer):
                 'write_only' : True
             }
         }
+
+class CommentSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    class Meta:
+        model = Comment
+        fields = ['id','content', 'create_date', 'updated_date','user']

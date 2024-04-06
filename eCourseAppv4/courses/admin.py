@@ -1,5 +1,5 @@
 from django.contrib import admin
-from courses.models import Category, Courses, Lesson, Tag
+from courses.models import Category, Courses, Lesson, Tag, Comment
 from django.utils.html import mark_safe
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from django import forms
@@ -38,3 +38,4 @@ admin.site.register(Category)
 admin.site.register(Courses, CourseAdmin)
 admin.site.register(Lesson)
 admin.site.register(Tag)
+admin.site.register(Comment)
