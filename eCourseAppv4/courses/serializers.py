@@ -29,11 +29,22 @@ class TagSerializer(serializers.ModelSerializer):
         fields = ['id','name']
 
 class LessonDetailSerializer(LessonSerializers):
-    tags= TagSerializer(many= True)
+    tags = TagSerializer(many= True)
     class Meta:
         model = LessonSerializers.Meta.model
         fields = LessonSerializers.Meta.fields + ['content', 'tags']
 
+class AuthenticatedLessonDetailsSerializer(LessonDetailSerializer):
+    liked = serializers.SerializerMethodField()
+
+    def get_liked(self, lesson):
+        request = self.context.get('request')
+        if request:
+            return lesson.like_set.filter(user=request.user, active=True).exists()
+
+    class Meta:
+        model = LessonDetailSerializer.Meta.model
+        fields = LessonSerializers.Meta.fields + ['liked']
 class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         data = validated_data.copy()

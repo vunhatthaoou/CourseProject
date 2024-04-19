@@ -9,6 +9,8 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+# client_id = TlDB5Lcy3vGpCdgq82boxBiaTUUNRvwaUv7KCtvC
+# client_secret = QWV44iTw41iXyYSMSiNN36PT3xF7Drh3xZs17m5jvAQThE9jzx53iitAdOthrwYDw52p6gBEZu97ZX839Eaiw3y3F32PHuZ7OmO4bYlk4AcdgvgP707l0OKTj6C2ipyF
 
 from pathlib import Path
 
@@ -55,7 +57,8 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'rest_framework',
-    'drf_yasg'
+    'drf_yasg',
+    'oauth2_provider'
 ]
 
 MIDDLEWARE = [
@@ -69,6 +72,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'eCourseAppv4.urls'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+    )
+}
 
 TEMPLATES = [
     {
