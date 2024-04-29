@@ -53,7 +53,8 @@ class Lesson(BaseModel):
     class Meta:
         unique_together = ('subject', 'course')
 
-
+    def __str__(self):
+        return self.subject
 # Create your models here.
 
 class Interaction(BaseModel):
