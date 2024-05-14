@@ -1,9 +1,12 @@
 import axios from "axios";
-const BASE_URL = "http://192.168.1.7:8000/"
+const BASE_URL = "http://192.168.1.6:8000/";
 export const endpoints = {
-    'categories': '/categories/',
-    'courses': '/courses/'
-}
+  categories: "/categories/",
+  courses: "/courses/",
+  lessons: (courseId) => `/courses/${courseId}/lessons/`,
+  "lesson-detail": (lessonId) => `/lessons/${lessonId}/`,
+  comments: (lessonId) => `/lessons/${lessonId}/comments/`,
+};
 export default axios.create({
-    baseURL: BASE_URL
+  baseURL: BASE_URL,
 });
